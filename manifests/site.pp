@@ -1,4 +1,4 @@
-inode /^puppet/ {
+node /^puppet/ {
   notify { 'hello': }
 
   class {'::puppetdb':
