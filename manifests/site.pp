@@ -34,6 +34,15 @@ node /^puppet/ {
 # Web Server node definition
 #
 node /^web/ {
-  # TODO: install python web server
+  # Make sure puppet agent run every minute
+  cron { 'puppet-agent':
+    ensure      => present,
+    user        => root,
+    minute      => '*',
+    command     => '/opt/puppetlabs/bin/puppet agent -t -v',
+  }
+
+  # TODO: install python web server and dependencies
+  # TODO: install python web application
   # TODO: declare haproxy backend
 }
