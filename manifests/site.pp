@@ -34,6 +34,14 @@ node /^puppet/ {
 # Web Server node definition
 #
 node /^web/ {
+  # Make sure puppet agent run every minute
+  cron { 'puppet-agent':
+    ensure      => present,
+    user        => root,
+    minute      => '*',
+    command     => '/opt/puppetlabs/bin/puppet agent -t -v',
+  }
+
   # Installation du nécessaire pour python
   class { 'python' :
     version    => 'system',
@@ -46,5 +54,6 @@ node /^web/ {
   # Installation de Flask (genre de serveur web pour python)
   python::pip { 'Flask': }
 
+  # TODO: install python web application
   # TODO: declare haproxy backend
 }
