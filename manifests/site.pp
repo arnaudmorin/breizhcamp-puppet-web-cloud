@@ -54,6 +54,21 @@ node /^web/ {
   # Installation de Flask (genre de serveur web pour python)
   python::pip { 'Flask': }
 
-  # TODO: install python web application
+  # Install python web application
+  package { 'git':
+    ensure    => 'latest',
+  }
+  ->
+  vcsrepo { '/opt/demoflask':
+    ensure    => latest,
+    provider  => git,
+    source    => 'https://github.com/arnaudmorin/puppet-demoflask.git',
+  }
+  ->
+  exec { '/opt/demoflask/start.py &':
+    unless    => '/bin/pidof -x start.py',
+    require   => Python::Pip['Flask'],
+  } 
+
   # TODO: declare haproxy backend
 }
