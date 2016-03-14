@@ -70,5 +70,12 @@ node /^web/ {
     require   => Python::Pip['Flask'],
   } 
 
-  # TODO: declare haproxy backend
+  # declare haproxy backend
+  @@haproxy::balancermember { $::fqdn:
+    listening_service => 'web',
+    ipaddresses       => $::ipaddress,
+    server_names      => $::hostname,
+    ports             => '5000',
+    options           => 'check',
+  }
 }
