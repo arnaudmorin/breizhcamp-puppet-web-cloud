@@ -25,7 +25,29 @@ node /^puppet/ {
     command     => '/opt/puppetlabs/bin/puppet agent -t -v',
   }
 
-  # TODO: install and configure haproxy
+  # install and configure haproxy
+  class { 'haproxy': }
+
+  haproxy::listen { 'stats':
+    ipaddress        => $::ipaddress,
+    ports            => '9090',
+    options          => {
+      'mode'  => 'http',
+      'stats' => [
+        'uri /',
+        'auth root:moutarde'
+      ],
+    },
+  }
+
+  haproxy::listen { 'web':
+    ipaddress        => $::ipaddress,
+    ports            => '80',
+    options          => {
+      'option'  => ['tcplog'],
+      'balance' => 'roundrobin',
+    },
+  }
 }
 
 
