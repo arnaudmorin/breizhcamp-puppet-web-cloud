@@ -34,8 +34,7 @@ node /^puppet/ {
     options          => {
       'mode'  => 'http',
       'stats' => [
-        'uri /',
-        'auth root:moutarde'
+        'uri /'
       ],
     },
   }
