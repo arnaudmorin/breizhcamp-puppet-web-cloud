@@ -34,6 +34,17 @@ node /^puppet/ {
 # Web Server node definition
 #
 node /^web/ {
-  # TODO: install python web server
+  # Installation du nécessaire pour python
+  class { 'python' :
+    version    => 'system',
+    pip        => 'present',
+    dev        => 'absent',
+    virtualenv => 'absent',
+    gunicorn   => 'absent',
+  }
+
+  # Installation de Flask (genre de serveur web pour python)
+  python::pip { 'Flask': }
+
   # TODO: declare haproxy backend
 }
