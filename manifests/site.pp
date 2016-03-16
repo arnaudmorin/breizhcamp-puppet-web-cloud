@@ -1,7 +1,7 @@
 #
 # OVH Breizhcamp
 #
-# @author: Arnaud Morin <arnaud.morin@corp.ovh.com>
+# author: Arnaud Morin <arnaud.morin@corp.ovh.com>
 #
 
 #
@@ -13,7 +13,7 @@ node /^puppet/ {
 
   # Install puppetdb
   class {'::puppetdb':
-    listen_address => $::ipaddress,
+    listen_address => '0.0.0.0',
   }
   class { 'puppetdb::master::config': }
 
@@ -34,8 +34,7 @@ node /^puppet/ {
     options          => {
       'mode'  => 'http',
       'stats' => [
-        'uri /',
-        'auth root:moutarde'
+        'uri /'
       ],
     },
   }
